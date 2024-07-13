@@ -1,0 +1,32 @@
+{
+    "name": "ferdiunal/nova-password-confirm-modal",
+    "description": "The Laravel Nova field that manages the availability of data.",
+    "keywords": [
+        "laravel",
+        "nova",
+        "nova-field",
+        "nova-password-confirm-modal",
+        "ferdiunal"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ferdiunal\\NovaPasswordConfirmModal\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ferdiunal\\NovaPasswordConfirmModal\\FieldServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
