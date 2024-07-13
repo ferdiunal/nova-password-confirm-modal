@@ -2,6 +2,9 @@
 
 This Laravel Nova field manages the availability of data by requiring a password confirmation through a modal dialog.
 
+## Video
+[![Nova Password Confirm Modal](https://i.ytimg.com/vi/xiumt77R5Wc/maxresdefault.jpg)](https://www.youtube.com/watch?v=xiumt77R5Wc)
+
 ## Features
 
 - **Secure Data Access**: Ensures that sensitive operations require password confirmation.
