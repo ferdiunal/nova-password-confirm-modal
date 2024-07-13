@@ -3,7 +3,6 @@
 namespace Ferdiunal\NovaPasswordConfirmModal\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Ferdiunal\NovaPasswordConfirmModal\Rules\PasswordVerifyRule;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ShowValueController extends Controller

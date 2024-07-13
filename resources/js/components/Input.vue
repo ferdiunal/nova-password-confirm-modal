@@ -23,7 +23,7 @@ export default {
             return this.lock ? 'password' : 'text'
         },
         lock() {
-            return !this.result && !this.field.readonly && !this.field.disabled
+            return !this.result || !this.result && !this.field.readonly && !this.field.disabled
         },
     },
     watch: {

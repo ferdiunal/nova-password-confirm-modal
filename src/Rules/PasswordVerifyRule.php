@@ -14,8 +14,8 @@ class PasswordVerifyRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!\Hash::check($value, \Auth::user()->password)) {
-            $fail("The :attribute is incorrect.");
+        if (! \Hash::check($value, \Auth::user()->password)) {
+            $fail('The :attribute is incorrect.');
         }
     }
 }

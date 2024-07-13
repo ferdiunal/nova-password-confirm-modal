@@ -16,7 +16,7 @@ class VerifyController extends Controller
                 'string',
                 // 'min:8',
                 // 'max:40',
-                new PasswordVerifyRule
+                new PasswordVerifyRule,
             ],
             'attribute' => 'required|string',
         ]);

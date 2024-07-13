@@ -4,11 +4,8 @@ namespace Ferdiunal\NovaPasswordConfirmModal;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Field;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class NovaPasswordConfirmModal extends Field
 {
@@ -28,6 +25,14 @@ class NovaPasswordConfirmModal extends Field
 
     public bool $enableCountdown = false;
 
+    public int $maskIndentFromStart = 2;
+
+    public int $maskIndentFromEnd = 2;
+
+    public string $maskChar = '*';
+
+    public bool $showLast = false;
+
     public function __construct($name, $attribute = null, $resolveCallback = null)
     {
         parent::__construct($name, $attribute, $resolveCallback);
@@ -46,9 +51,8 @@ class NovaPasswordConfirmModal extends Field
             ->showResolve(function (string $resource, string $resourceId, string $attribute) {
                 $uniqueId = Str::uuid();
                 Cache::put($uniqueId, encrypt([Auth::id(), $resource, $resourceId, $attribute, $this->resource[$this->attribute]]), now()->addSeconds(30));
-                return response(route('nova-password-confirm-modal.show', compact('resource', 'resourceId', 'attribute', 'uniqueId')), 200, [
-                    'X-Nova-Csrf-Token' => Session::token()
-                ]);
+
+                return response(route('nova-password-confirm-modal.show', compact('resource', 'resourceId', 'attribute', 'uniqueId')));
             })
             ->readResolve(function (string $resource, string $resourceId, string $attribute, string $value) {
                 if ($data = cache($value)) {
@@ -60,6 +64,7 @@ class NovaPasswordConfirmModal extends Field
                         $_length = strlen($_data);
                         $firstBlock = str($_data)->substr(0, $_length / 2);
                         $lastBlock = str($_data)->substr($_length / 2, $_length);
+
                         return response("$lastBlock$firstBlock");
                     }
                 }
@@ -84,16 +89,48 @@ class NovaPasswordConfirmModal extends Field
 
     private function hideValue(string $value): string
     {
-        return substr_replace($value, str_repeat('*', strlen($value) - 2), 2);
+        $valueLength = strlen($value);
+        $maskLength = $valueLength - $this->maskIndentFromStart - $this->maskIndentFromEnd;
+
+        if ($maskLength <= 0) {
+            return $value;
+        }
+
+        $maskedPart = str_repeat($this->maskChar, $maskLength);
+
+        $startPart = $this->maskIndentFromStart > 0 ? substr($value, 0, $this->maskIndentFromStart) : '';
+        $endPart = $this->maskIndentFromEnd > 0 ? substr($value, -$this->maskIndentFromEnd) : '';
+
+        return $startPart.$maskedPart.$endPart;
     }
 
+    public function maskChar(string $char = '*'): self
+    {
+        $this->maskChar = $char;
+
+        return $this;
+    }
+
+    public function maskIndent(
+        $start = 2,
+        $end = 2,
+    ) {
+        if ($start < 0 || $end < 0) {
+            throw new \InvalidArgumentException('Mask indent must be greater than or equal to 0');
+        }
+
+        $this->maskIndentFromStart = $start;
+        $this->maskIndentFromEnd = $end;
+
+        return $this;
+    }
 
     public function countdown(int $countdown = 30): self
     {
         $this->countdown = $countdown;
 
         $this->withMeta([
-            'countdown' => $countdown
+            'countdown' => $countdown,
         ]);
 
         return $this;
@@ -104,7 +141,7 @@ class NovaPasswordConfirmModal extends Field
         $this->enableCountdown = $enableCountdown;
 
         $this->withMeta([
-            'enableCountdown' => $enableCountdown
+            'enableCountdown' => $enableCountdown,
         ]);
 
         return $this;
@@ -115,7 +152,7 @@ class NovaPasswordConfirmModal extends Field
         $this
             ->readonly()
             ->withMeta([
-                'disabled' => true
+                'disabled' => true,
             ]);
 
         return $this;
