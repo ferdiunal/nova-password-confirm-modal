@@ -1,4 +1,4 @@
-# Nova Password Confirm Modal
+# Nova Password Confirm Modal - WIP
 
 This Laravel Nova field manages the availability of data by requiring a password confirmation through a modal dialog.
 
@@ -145,7 +145,3 @@ Contributions are welcome, and any contributors must adhere to the project's cod
 ## Support
 
 For support, please open an issue in the GitHub repository.
-
-## Authors
-
-- **Ferdi Ünal** - _Initial work_ - [ferdiunal](https://github.com/ferdiunal)
