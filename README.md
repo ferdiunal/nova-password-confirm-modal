@@ -1,4 +1,4 @@
-# Nova Password Confirm Modal
+# Nova Password Confirm Modal - WIP
 
 This Laravel Nova field manages the availability of data by requiring a password confirmation through a modal dialog.
 
