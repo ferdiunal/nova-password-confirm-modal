@@ -145,7 +145,3 @@ Contributions are welcome, and any contributors must adhere to the project's cod
 ## Support
 
 For support, please open an issue in the GitHub repository.
-
-## Authors
-
-- **Ferdi Ünal** - _Initial work_ - [ferdiunal](https://github.com/ferdiunal)
