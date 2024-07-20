@@ -129,7 +129,7 @@ export default {
     <Modal :show="show" role="alertdialog" size="md"
         class="npcm--h-dvh npcm--flex npcm--justify-center npcm--items-center">
         <div class="npcm--w-full">
-            <div class="npcm--w-full npcm--bg-white dark:npcm--bg-gray-800 npcm--rounded-lg npcm--shadow-lg npcm--overflow-hidden"
+            <div class="npcm--w-full npcm--bg-white dark:bg-gray-800 npcm--rounded-lg npcm--shadow-lg npcm--overflow-hidden"
                 :class="{
                     'npcm--animate-shake npcm--border-2 npcm--border-red-500': isShaking || isError,
                 }">
