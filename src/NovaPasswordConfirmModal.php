@@ -38,11 +38,11 @@ class NovaPasswordConfirmModal extends Field
         parent::__construct($name, $attribute, $resolveCallback);
 
         $this->displayUsing(function ($value) {
-            return $this->hideValue($value);
+            return $this->hideValue($value ?? "");
         });
 
         $this->resolveUsing(function ($value) {
-            return $this->hideValue($value);
+            return $this->hideValue($value ?? "");
         });
 
         $this
@@ -101,7 +101,7 @@ class NovaPasswordConfirmModal extends Field
         $startPart = $this->maskIndentFromStart > 0 ? substr($value, 0, $this->maskIndentFromStart) : '';
         $endPart = $this->maskIndentFromEnd > 0 ? substr($value, -$this->maskIndentFromEnd) : '';
 
-        return $startPart.$maskedPart.$endPart;
+        return $startPart . $maskedPart . $endPart;
     }
 
     public function maskChar(string $char = '*'): self
