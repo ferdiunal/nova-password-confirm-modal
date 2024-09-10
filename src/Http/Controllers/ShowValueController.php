@@ -16,10 +16,13 @@ class ShowValueController extends Controller
             return false;
         }
 
-        $field = $resource->updateFields($request)
-            ->findFieldByAttribute($attribute, function () {
-                abort(404);
-            });
+        $field = $resource->resolveFieldForAttribute($request, $attribute);
+
+        if (! property_exists($field, 'readResolveCallback')) {
+            return response()->json([
+                'message' => 'Field does not have readResolveCallback method',
+            ], 400);
+        }
 
         return call_user_func($field->readResolveCallback, $resourceName, $resourceId, $attribute, $uniqueId);
     }

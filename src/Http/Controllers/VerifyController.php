@@ -25,13 +25,18 @@ class VerifyController extends Controller
         $resource->authorizeToView($request);
 
         if ($resource::trafficCop($request) === false) {
-            return false;
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 403);
         }
 
-        $field = $resource->updateFields($request)
-            ->findFieldByAttribute($validated['attribute'], function () {
-                abort(404);
-            });
+        $field = $resource->resolveFieldForAttribute($request, $validated['attribute']);
+
+        if (! property_exists($field, 'showResolveCallback')) {
+            return response()->json([
+                'message' => 'Field does not have showResolveCallback method',
+            ], 400);
+        }
 
         return call_user_func($field->showResolveCallback, $resourceName, $resourceId, $validated['attribute']);
     }
