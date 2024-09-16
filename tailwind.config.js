@@ -1,9 +1,11 @@
+import { generateTailwindColors } from '../../vendor/laravel/nova/generators'
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   prefix: "npcm--",
   content: ["./resources/**/*{js,vue,blade.php}"],
-  darkMode: ["class"],
+  darkMode: ['class', '[class="dark"]'],
   theme: {
+    colors: generateTailwindColors(),
     extend: {
       animation: {
         shake: "shake 0.82s cubic-bezier(.36,.07,.19,.97) both",
